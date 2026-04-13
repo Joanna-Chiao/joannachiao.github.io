@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Insights | Joanna Chiao</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&family=Noto+Serif+TC:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+
+:root {
+  --black: #0a0a08;
+  --gold: #c9a84c;
+  --gold-light: #e8c97a;
+  --nude: #e8d5c4;
+  --rose-gold: #c4967a;
+  --white: #faf8f5;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Jost', 'Noto Serif TC', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+body::before {
+  content:''; position:fixed; inset:0; z-index:0;
+  background:
+    radial-gradient(ellipse at 15% 20%, rgba(201,168,76,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 80%, rgba(196,150,122,0.05) 0%, transparent 45%);
+  pointer-events:none;
+}
+nav, section, footer, .stats-bar, .page-hero { position:relative; z-index:1; }
+
+/* LANGUAGE */
+.zh { display:none; }
+.zh-inline { display:none; }
+.en-inline { display:inline; }
+body.lang-zh .en { display:none; }
+body.lang-zh .zh { display:block; }
+body.lang-zh .zh-inline { display:inline; }
+body.lang-zh .en-inline { display:none; }
+body.lang-zh .section-title,
+body.lang-zh h3, body.lang-zh h4,
+body.lang-zh blockquote { font-family:'Noto Serif TC',serif; }
+
+/* LANG SWITCHER */
+.lang-switcher { display:flex; border:1px solid rgba(201,168,76,0.3); overflow:hidden; }
+.lang-btn { padding:0.35rem 0.85rem; font-family:'Jost',sans-serif; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; background:transparent; color:rgba(232,213,196,0.5); border:none; cursor:pointer; transition:background 0.3s,color 0.3s; }
+.lang-btn.active { background:linear-gradient(135deg,var(--gold),var(--rose-gold)); color:var(--black); font-weight:500; }
+.lang-btn:not(.active):hover { color:var(--gold); }
+
+/* NAV */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1.4rem 4rem;
+  background:rgba(10,10,8,0.92);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(201,168,76,0.12);
+}
+.nav-logo { font-family:'Cormorant Garamond',serif; font-size:1.25rem; font-weight:300; letter-spacing:0.2em; color:var(--gold); text-decoration:none; }
+.nav-right { display:flex; align-items:center; gap:2rem; }
+.nav-links { display:flex; gap:2rem; list-style:none; }
+.nav-links a { text-decoration:none; color:var(--nude); font-size:0.73rem; letter-spacing:0.1em; text-transform:uppercase; transition:color 0.3s; }
+.nav-links a:hover, .nav-links a.active { color:var(--gold); }
+
+/* BUTTONS */
+.btn-primary { padding:0.85rem 2.2rem; background:linear-gradient(135deg,var(--gold),var(--rose-gold)); color:var(--black); font-family:'Jost',sans-serif; font-size:0.75rem; font-weight:500; letter-spacing:0.15em; text-transform:uppercase; text-decoration:none; border:none; cursor:pointer; display:inline-block; transition:opacity 0.3s,transform 0.3s; }
+.btn-primary:hover { opacity:0.85; transform:translateY(-2px); }
+.btn-outline { padding:0.85rem 2.2rem; background:transparent; color:var(--nude); font-family:'Jost',sans-serif; font-size:0.75rem; font-weight:400; letter-spacing:0.15em; text-transform:uppercase; text-decoration:none; border:1px solid rgba(232,213,196,0.25); cursor:pointer; display:inline-block; transition:border-color 0.3s,color 0.3s,transform 0.3s; }
+.btn-outline:hover { border-color:var(--gold); color:var(--gold); transform:translateY(-2px); }
+
+/* DIVIDER */
+.divider { display:flex; align-items:center; gap:1.5rem; padding:0 4rem; margin:1rem 0; position:relative; z-index:1; }
+.divider-line { flex:1; height:1px; background:linear-gradient(to right,transparent,rgba(201,168,76,0.25),transparent); }
+.divider-diamond { width:7px; height:7px; background:var(--gold); transform:rotate(45deg); flex-shrink:0; opacity:0.8; }
+
+/* SECTIONS */
+section { padding:6rem 4rem; }
+.section-label { font-size:0.68rem; letter-spacing:0.35em; text-transform:uppercase; color:var(--rose-gold); margin-bottom:0.8rem; }
+.section-title { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,4vw,3.2rem); font-weight:300; line-height:1.18; margin-bottom:1.5rem; }
+.section-title em { font-style:italic; color:var(--gold-light); }
+
+/* PAGE HERO (inner pages) */
+.page-hero { padding:10rem 4rem 5rem; border-bottom:1px solid rgba(201,168,76,0.1); }
+.page-hero-label { font-size:0.7rem; letter-spacing:0.35em; text-transform:uppercase; color:var(--rose-gold); margin-bottom:1rem; }
+.page-hero-title { font-family:'Cormorant Garamond',serif; font-size:clamp(2.5rem,5vw,4.5rem); font-weight:300; line-height:1.1; color:var(--white); }
+.page-hero-title em { font-style:italic; color:var(--gold-light); }
+
+/* FOOTER */
+footer { padding:2.5rem 4rem; border-top:1px solid rgba(201,168,76,0.1); display:flex; align-items:center; justify-content:space-between; position:relative; z-index:1; }
+.footer-logo { font-family:'Cormorant Garamond',serif; font-size:1.1rem; color:var(--gold); letter-spacing:0.12em; text-decoration:none; }
+.footer-links { display:flex; gap:2rem; }
+.footer-links a { font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(232,213,196,0.3); text-decoration:none; transition:color 0.3s; }
+.footer-links a:hover { color:var(--gold); }
+.footer-right { font-size:0.7rem; color:rgba(232,213,196,0.25); text-align:right; }
+
+/* ANIMATIONS */
+@keyframes fadeUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:1.2rem 1.5rem;}
+  .nav-links{display:none;}
+  section{padding:4rem 1.5rem;}
+  .page-hero{padding:8rem 1.5rem 3rem;}
+  .divider{padding:0 1.5rem;}
+  footer{flex-direction:column;gap:1rem;text-align:center;padding:2rem 1.5rem;}
+  .footer-right{text-align:center;}
+}
+
+
+.insights-grid { display:grid; grid-template-columns:1.6fr 1fr; gap:2rem; margin-top:3rem; }
+.insight-featured { padding:3rem; border:1px solid rgba(201,168,76,0.15); background:rgba(201,168,76,0.025); position:relative; overflow:hidden; }
+.insight-featured::before { content:''; position:absolute; top:0; left:0; width:3px; height:100%; background:linear-gradient(to bottom,var(--gold),var(--rose-gold)); }
+.insight-date { font-size:0.65rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--rose-gold); margin-bottom:1rem; }
+.insight-featured h3 { font-family:'Cormorant Garamond',serif; font-size:1.6rem; color:var(--nude); line-height:1.3; margin-bottom:1rem; }
+body.lang-zh .insight-featured h3 { font-family:'Noto Serif TC',serif; }
+.insight-featured p { font-size:0.85rem; line-height:1.85; color:rgba(232,213,196,0.58); margin-bottom:1rem; }
+body.lang-zh .insight-featured p { font-family:'Noto Serif TC',serif; line-height:2.1; }
+.insight-tag { display:inline-block; padding:0.25rem 0.8rem; font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase; border:1px solid rgba(201,168,76,0.25); color:var(--gold); margin-bottom:1.5rem; }
+.insights-sidebar { display:flex; flex-direction:column; gap:1px; background:rgba(201,168,76,0.08); }
+.insight-mini { padding:1.5rem; background:var(--black); border:1px solid rgba(201,168,76,0.06); transition:background 0.3s,border-color 0.3s; cursor:pointer; }
+.insight-mini:hover { background:rgba(201,168,76,0.03); border-color:rgba(201,168,76,0.2); }
+.insight-mini-date { font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(196,150,122,0.7); margin-bottom:0.5rem; }
+.insight-mini h4 { font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--nude); line-height:1.35; margin-bottom:0.4rem; }
+body.lang-zh .insight-mini h4 { font-family:'Noto Serif TC',serif; }
+.insight-mini p { font-size:0.75rem; color:rgba(232,213,196,0.42); line-height:1.6; }
+body.lang-zh .insight-mini p { font-family:'Noto Serif TC',serif; }
+.members-bar { margin-top:2rem; padding:1.5rem 2rem; border:1px solid rgba(201,168,76,0.15); background:rgba(201,168,76,0.03); display:flex; align-items:center; justify-content:space-between; gap:2rem; }
+.members-bar p { font-size:0.85rem; color:rgba(232,213,196,0.6); line-height:1.6; }
+body.lang-zh .members-bar p { font-family:'Noto Serif TC',serif; line-height:2; }
+.members-bar strong { color:var(--gold); font-weight:400; }
+@media(max-width:900px){
+  .insights-grid{grid-template-columns:1fr;}
+  .members-bar{flex-direction:column;text-align:center;}
+}
+
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Joanna Chiao</a>
+  <div class="nav-right">
+    <ul class="nav-links"><li><a href="index.html"><span class="en-inline">Home</span><span class="zh-inline">首頁</span></a></li>
+<li><a href="about.html"><span class="en-inline">About</span><span class="zh-inline">關於我</span></a></li>
+<li><a href="services.html"><span class="en-inline">Services</span><span class="zh-inline">服務</span></a></li>
+<li><a href="insights.html" class="active"><span class="en-inline">Insights</span><span class="zh-inline">市場評析</span></a></li>
+<li><a href="courses.html"><span class="en-inline">Courses</span><span class="zh-inline">課程</span></a></li>
+<li><a href="contact.html"><span class="en-inline">Contact</span><span class="zh-inline">聯絡</span></a></li>
+</ul>
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">繁中</button>
+    </div>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <p class="page-hero-label"><span class="en-inline">Weekly Commentary</span><span class="zh-inline">每週評析</span></p>
+  <h1 class="page-hero-title"><span class="en">Economic & <em>Political Insights</em></span><span class="zh">經濟與<em>政治評析</em></span></h1>
+</div>
+<section>
+  <div class="insights-grid">
+    <div class="insight-featured">
+      <span class="insight-tag"><span class="en-inline">Latest · Economic Analysis</span><span class="zh-inline">最新 · 經濟分析</span></span>
+      <div class="insight-date">28 March 2026</div>
+      <h3><span class="en">When Geopolitics Becomes Your Financial Plan</span><span class="zh">當地緣政治成為您的財務規劃</span></h3>
+      <p><span class="en">The Middle East conflict pushed oil above $110 per barrel, the Bank of England held rates at 3.75%, and the OBR quietly downgraded UK growth forecasts to just 1.1% for 2026. Three separate headlines. One interconnected story.</span><span class="zh">中東衝突推動油價突破每桶110美元，英倫銀行維持利率於3.75%，而英國預算責任辦公室悄然將2026年英國增長預測下調至僅1.1%。三條看似獨立的新聞，實則環環相扣。</span></p>
+      <p><span class="en">The clients who build lasting wealth are not the ones who react fastest. They are the ones who understand the structural forces at play — and position themselves accordingly, before the headlines arrive.</span><span class="zh">能夠建立持久財富的客戶，並非反應最快的人，而是那些理解深層結構力量、在新聞頭條出現之前已做好部署的人。</span></p>
+      <a href="contact.html" class="btn-outline"><span class="en-inline">Get Full Analysis → Join Newsletter</span><span class="zh-inline">獲取完整分析 → 訂閱電子報</span></a>
+    </div>
+    <div class="insights-sidebar">
+      <div class="insight-mini"><div class="insight-mini-date">21 March 2026</div><h4><span class="en">The Spring Statement & What It Didn't Say</span><span class="zh">春季財政聲明與其未言之處</span></h4><p><span class="en">Rachel Reeves called it a non-event. For wealth holders, the silence was the signal.</span><span class="zh">Reeves稱之為例行公事，但對財富持有者而言，沉默本身便是訊號。</span></p></div>
+      <div class="insight-mini"><div class="insight-mini-date">14 March 2026</div><h4><span class="en">Rate Holds, Rising Unemployment & Your ISA Strategy</span><span class="zh">利率按兵不動、失業率攀升與您的ISA策略</span></h4><p><span class="en">The Bank held at 3.75%. Here is what that means before the new tax year.</span><span class="zh">英倫銀行維持3.75%。新稅務年度前，這對您意味著什麼？</span></p></div>
+      <div class="insight-mini"><div class="insight-mini-date">7 March 2026</div><h4><span class="en">FTSE at 10,000: Celebration or Caution?</span><span class="zh">富時100破萬點：值得慶祝，還是保持警惕？</span></h4><p><span class="en">Record highs often mask structural fragilities. A measured view on UK equities.</span><span class="zh">歷史高位往往掩蓋結構性脆弱。對英國股市的審慎評估。</span></p></div>
+    </div>
+  </div>
+  <div class="members-bar">
+    <p><span class="en">Full analysis, specific wealth implications, and actionable guidance available exclusively for <strong>newsletter subscribers</strong>. Each week covers what headlines mean for your ISA, pension, tax planning, and long-term strategy.</span><span class="zh">完整分析、具體財富影響及可行指引，僅向<strong>電子報訂閱者</strong>開放。每週評析涵蓋頭條新聞對您的ISA、退休金、稅務規劃及長遠策略的意義。</span></p>
+    <a href="contact.html" class="btn-primary" style="flex-shrink:0;"><span class="en-inline">Join the Newsletter</span><span class="zh-inline">訂閱電子報</span></a>
+  </div>
+</section>
+
+
+<footer>
+  <a href="index.html" class="footer-logo">Joanna Chiao</a>
+  <div class="footer-links">
+    <a href="about.html"><span class="en-inline">About</span><span class="zh-inline">關於我</span></a>
+    <a href="services.html"><span class="en-inline">Services</span><span class="zh-inline">服務</span></a>
+    <a href="insights.html"><span class="en-inline">Insights</span><span class="zh-inline">市場評析</span></a>
+    <a href="courses.html"><span class="en-inline">Courses</span><span class="zh-inline">課程</span></a>
+    <a href="contact.html"><span class="en-inline">Contact</span><span class="zh-inline">聯絡</span></a>
+  </div>
+  <div class="footer-right">
+    <p>© 2026 Joanna Chiao · London, UK</p>
+    <p style="margin-top:0.3rem;"><span class="en-inline">Wealth Management Consultant</span><span class="zh-inline">財富管理顧問</span></p>
+  </div>
+</footer>
+
+<script>
+function setLang(lang) {
+  document.body.classList.remove('lang-en','lang-zh');
+  document.body.classList.add('lang-' + lang);
+  document.querySelectorAll('.lang-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.querySelectorAll('.lang-btn[data-lang="' + lang + '"]').forEach(function(b){ b.classList.add('active'); });
+  localStorage.setItem('jc-lang', lang);
+  document.documentElement.lang = lang === 'zh' ? 'zh-TW' : 'en';
+}
+document.addEventListener('DOMContentLoaded', function(){
+  var saved = localStorage.getItem('jc-lang') || 'en';
+  setLang(saved);
+});
+</script>
+
+</body>
+</html>
